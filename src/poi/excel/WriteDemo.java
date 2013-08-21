@@ -4,6 +4,8 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.lang.reflect.InvocationTargetException;
+import java.lang.reflect.Method;
 import java.util.Date;
 import java.util.Map;
 import java.util.Set;
@@ -42,10 +44,10 @@ public class WriteDemo {
 		data.put("4", new Object[] {3d, "Dean", 700000d});
 		 
 		// For XLS file
-		sheetWrite(data, sheet, false);
+		sheetWrite(data, sheet);
 		
 		// For XLSX file
-		sheetWrite(data, xsheet, true);
+		sheetWrite(data, xsheet);
 		
 		try {
 			
@@ -70,7 +72,8 @@ public class WriteDemo {
 	}
 	
 	// Apply the data to the spreadsheet
-	public static void sheetWrite(Map<String, Object[]> data, Iterable<Row> sheet, boolean isXML){
+	public static void sheetWrite(Map<String, Object[]> data, Iterable<Row> iterable){
+		
 		Set<String> keyset = data.keySet();
 		int rownum = 0;
 		
@@ -79,13 +82,44 @@ public class WriteDemo {
 			// Each row
 		    Row row = null;
 		    
-		    if(!isXML){
-		    	// For XLS file
-		    	row = ((HSSFSheet)sheet).createRow(rownum++);
-		    } else {
-		    	// For XLSX file
-		    	row = ((XSSFSheet)sheet).createRow(rownum++);
-		    }
+		    // Reflect: http://godleon.blogspot.hk/2007/09/class-class-java-class-class-jvm-class.html
+			try {
+				// Get the class, IMPORTANT: getName()
+				Class<?> c = Class.forName(iterable.getClass().getName());
+				
+				// Cast the interface to object
+				Object obj = c.cast(iterable);
+				
+				// Specify the parameter(s)  for method
+				Class<?>[] clazz = {Integer.TYPE};
+				
+				// Create method with method name and parameters
+				Method createRow = c.getMethod("createRow", clazz);
+				
+				// Specify the value(s) of parameter(s)
+				Object[] args = {new Integer(rownum++)};
+				
+				// Invoke the method
+				row = (Row)createRow.invoke(obj, args);
+			} catch (ClassNotFoundException e) {
+				// For Class.forName
+				e.printStackTrace();
+			} catch (SecurityException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			} catch (NoSuchMethodException e) {
+				// // For getMethod
+				e.printStackTrace();
+			} catch (IllegalArgumentException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			} catch (IllegalAccessException e) {
+				// For invoke method
+				e.printStackTrace();
+			} catch (InvocationTargetException e) {
+				// For invoke method
+				e.printStackTrace();
+			}
 		    
 		    Object [] objArr = data.get(key);
 		    int cellnum = 0;
