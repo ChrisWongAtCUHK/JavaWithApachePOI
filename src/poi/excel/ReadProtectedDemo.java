@@ -1,10 +1,11 @@
 package poi.excel;
 
-
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.io.InputStream;
+import java.security.GeneralSecurityException;
 import java.util.Iterator;
 
 //For .xls, libraries included: poi-3.9-20121203.jar
@@ -15,22 +16,47 @@ import org.apache.poi.hssf.usermodel.HSSFWorkbook;
 import org.apache.poi.xssf.usermodel.XSSFSheet;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 
+//For protected xls/xlsx
+import org.apache.poi.poifs.crypt.Decryptor;
+import org.apache.poi.poifs.crypt.EncryptionInfo;
+import org.apache.poi.poifs.filesystem.POIFSFileSystem;
+
 import org.apache.poi.ss.usermodel.Cell;
 import org.apache.poi.ss.usermodel.Row;
 
-public class ReadDemo {
-	
+public class ReadProtectedDemo {
+	final static String PASSWORD = "123456";
 	public static void main(String[] args){
 		try {
-		     
-		    FileInputStream file = new FileInputStream(new File("resource\\test.xls"));
-		    FileInputStream xfile = new FileInputStream(new File("resource\\test.xlsx"));
-		     
+			
+			InputStream file = new FileInputStream(new File("resource\\protected.xls"));
+		    FileInputStream xfile = new FileInputStream(new File("resource\\protected.xlsx"));
+		    org.apache.poi.hssf.record.crypto.Biff8EncryptionKey.setCurrentUserPassword(PASSWORD);
+		    
+		    POIFSFileSystem fs = new POIFSFileSystem(xfile);
+		    EncryptionInfo info = new EncryptionInfo(fs);
+		    Decryptor d = Decryptor.getInstance(info);
+		    
+		    InputStream dataStream = null;
+		    try {
+	
+				 if (!d.verifyPassword(PASSWORD)) {
+				        throw new RuntimeException("Unable to process: document is encrypted");
+				    }
+
+				    dataStream = d.getDataStream(fs);
+
+				    // parse dataStream
+			} catch (GeneralSecurityException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		    
 		    //Get the workbook instance for XLS file 
 		    HSSFWorkbook workbook = new HSSFWorkbook(file);
 		 
 		    //Get the workbook instance for XLSX file 
-		    XSSFWorkbook xworkbook = new XSSFWorkbook(xfile);
+		    XSSFWorkbook xworkbook = new XSSFWorkbook(dataStream);
 		    
 		    //Get first sheet from the workbook, for XLS file
 		    HSSFSheet sheet = workbook.getSheetAt(0);
@@ -63,7 +89,7 @@ public class ReadDemo {
 		    while(cellIterator.hasNext()) {
 		         
 		        Cell cell = cellIterator.next();
-		         
+		        
 		        switch(cell.getCellType()) {
 		            case Cell.CELL_TYPE_BOOLEAN:
 		                System.out.print(cell.getBooleanCellValue() + "\t\t");
