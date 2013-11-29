@@ -65,9 +65,9 @@ public class ReadProtectedDemo {
 		    XSSFSheet xsheet = xworkbook.getSheetAt(0);
 		    
 		    //Iterate through each rows from first sheet
-		    System.out.println("--------------------XLS file------------------------");
+		    System.out.println("--------------------Protected XLS file------------------------");
 		    sheetIterate(sheet);
-		    System.out.println("--------------------XLSX file------------------------");
+		    System.out.println("--------------------Protected XLSX file------------------------");
 		    sheetIterate(xsheet);
 		    file.close();
 		     

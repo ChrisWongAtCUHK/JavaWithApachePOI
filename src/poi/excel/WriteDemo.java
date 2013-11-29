@@ -52,13 +52,13 @@ public class WriteDemo {
 		try {
 			
 			// For .xls
-			FileOutputStream out = new FileOutputStream(new File("test.xls"));
+			FileOutputStream out = new FileOutputStream(new File("resource\\test.xls"));
 			workbook.write(out);
 			out.close();
 			System.out.println("XLS written successfully..");
 		    
 			// For .xlsx
-		    FileOutputStream xout = new FileOutputStream(new File("test.xlsx"));
+		    FileOutputStream xout = new FileOutputStream(new File("resource\\test.xlsx"));
 		    xworkbook.write(xout);
 		    xout.close();
 		    System.out.println("XLSX written successfully..");

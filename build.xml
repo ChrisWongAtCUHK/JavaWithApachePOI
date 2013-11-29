@@ -1,0 +1,119 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<project name="example" default="help">
+	<property environment="env"/>
+	
+	<!-- Set up the properties -->
+	<target name="setProperties" description="set up properties">
+		<property name="project-name"       		value="JavaWithApachePOI"/>
+        <property name="readdemo-main-class"  		value="poi.excel.ReadDemo"/>
+		<property name="writedemo-main-class"  		value="poi.excel.WriteDemo"/>
+		<property name="readprotecteddemo-main-class"  		value="poi.excel.ReadProtectedDemo"/>
+        <property name="class-path"         		value="."/>
+        <property name="base-dir"           		value="bin"/>
+		<property name="deploy-dir"          	 	value="deploy"/>
+        <property name="javadoc-dir"       			value="doc"/>
+		<property name="lib-dir"	       			value="lib"/>
+		<property name="ref-dir"       				value="ref"/>
+		<property name="resource-dir"       		value="resource"/>
+		<property name="src-dir"       				value="src"/>
+		
+		<!-- Necessary external archives(jar) -->
+		<property name="commons-codec-1.8.jar"		value="${lib-dir}/commons-codec-1.8/commons-codec-1.8.jar"/>
+		<property name="poi-3.9.jar"				value="${lib-dir}/poi-3.9/poi-3.9-20121203.jar"/>
+		<property name="dom4j-1.6.1.jar"			value="${lib-dir}/poi-3.9/ooxml-lib/dom4j-1.6.1.jar"/>
+		<property name="xmlbeans-2.3.0.jar"			value="${lib-dir}/poi-3.9/ooxml-lib/xmlbeans-2.3.0.jar"/>
+		<property name="poi-ooxml-3.9.jar"			value="${lib-dir}/poi-3.9/poi-ooxml-3.9-20121203.jar"/>
+		<property name="poi-ooxml-schemas-3.9.jar"	value="${lib-dir}/poi-3.9/poi-ooxml-schemas-3.9-20121203.jar"/>
+	</target>
+
+	<!-- Necessary checking -->
+	<target name="check" unless="env.JAVA_HOME" depends="setProperties">
+		<fail message="JAVA_HOME must be set!"/>
+	</target>
+	
+	<!-- Clean up the project -->
+    <target name="clean" depends="setProperties">
+        <delete>
+    		<fileset dir="${base-dir}" includes="**/*.class"/>
+    	</delete>
+    	<delete>
+			<fileset dir="${deploy-dir}" includes="**/*.jar"/>
+		</delete>
+    </target>
+    
+	<!-- Create necessary directory -->
+    <target name="prepare" depends="setProperties"> 
+        <mkdir dir="${base-dir}"/>
+    	<mkdir dir="${deploy-dir}"/>
+    	<mkdir dir="${javadoc-dir}"/>
+    	<mkdir dir="${lib-dir}"/>
+    	<mkdir dir="${ref-dir}"/>
+    	<mkdir dir="${resource-dir}"/>
+    </target> 
+
+	<!-- Compile source files -->
+    <target name="compile" depends="prepare">
+		<javac srcdir="${src-dir}" destdir="${base-dir}" includeantruntime="false">
+		    <classpath> 
+		    	<pathelement location="${commons-codec-1.8.jar}"/>
+		    	<pathelement location="${dom4j-1.6.1.jar}"/>
+		    	<pathelement location="${xmlbeans-2.3.0.jar}"/>
+		    	<pathelement location="${poi-3.9.jar}"/>
+		    	<pathelement location="${poi-ooxml-3.9.jar}"/>
+		    	<pathelement location="${poi-ooxml-schemas-3.9.jar}"/>
+		    </classpath>
+		</javac>
+    </target>
+	
+	<!-- Run ${readdemo-main-class} independently -->
+	<target name="runrd" depends="compile">
+        <java classname="${readdemo-main-class}" classpath="${base-dir}" >
+        	 <classpath>
+				<pathelement location="${xmlbeans-2.3.0.jar}"/>
+		    	<pathelement location="${commons-codec-1.8.jar}"/>
+        	 	<pathelement location="${dom4j-1.6.1.jar}"/>
+		    	<pathelement location="${poi-3.9.jar}"/>
+		    	<pathelement location="${poi-ooxml-3.9.jar}"/>
+		    	<pathelement location="${poi-ooxml-schemas-3.9.jar}"/>
+		    </classpath>
+        </java>
+    </target>
+	
+	<!-- Run ${writedemo-main-class} independently -->
+	<target name="runwd" depends="compile">
+        <java classname="${writedemo-main-class}" classpath="${base-dir}" >
+        	 <classpath>
+				<pathelement location="${xmlbeans-2.3.0.jar}"/>
+		    	<pathelement location="${commons-codec-1.8.jar}"/>
+        	 	<pathelement location="${dom4j-1.6.1.jar}"/>
+		    	<pathelement location="${poi-3.9.jar}"/>
+		    	<pathelement location="${poi-ooxml-3.9.jar}"/>
+		    	<pathelement location="${poi-ooxml-schemas-3.9.jar}"/>
+		    </classpath>
+        </java>
+    </target>
+	
+	<!-- Run ${readprotecteddemo-main-class} independently -->
+	<target name="runrpd" depends="compile">
+        <java classname="${readprotecteddemo-main-class}" classpath="${base-dir}" >
+        	 <classpath>
+				<pathelement location="${xmlbeans-2.3.0.jar}"/>
+		    	<pathelement location="${commons-codec-1.8.jar}"/>
+        	 	<pathelement location="${dom4j-1.6.1.jar}"/>
+		    	<pathelement location="${poi-3.9.jar}"/>
+		    	<pathelement location="${poi-ooxml-3.9.jar}"/>
+		    	<pathelement location="${poi-ooxml-schemas-3.9.jar}"/>
+		    </classpath>
+        </java>
+    </target>
+
+	
+	<!-- Help menu -->
+	<target name="help" description="help information" depends="check">
+		<echo>Reference: http://openhome.cc/Gossip/JUnit/JUnitReport.html</echo>
+		<echo>Sample cmd: ant test</echo>
+		<echo>Sample cmd: ant txt</echo>
+		<echo>Sample cmd: ant xml</echo>
+		<echo>Sample cmd: ant report</echo>
+	</target>
+</project>
