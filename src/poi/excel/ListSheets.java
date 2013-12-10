@@ -30,7 +30,7 @@ public class ListSheets {
 	final static String XLSFILENAME = "resource\\sheets.xls";
 	final static String XLSXFILENAME = "resource\\sheets.xlsx";
 	
-	public static void main(String[] argv){
+	public static void main(String[] args){
 		try {
 		     
 		    FileInputStream file = new FileInputStream(new File(XLSFILENAME));
@@ -49,10 +49,10 @@ public class ListSheets {
 		    XSSFSheet xsheet = xworkbook.getSheetAt(0);
 		    
 		    //Iterate through each rows from first sheet
-		    out.println("--------------------XLS file------------------------");
-		    ReadDemo.sheetIterate(sheet);
-		    out.println("--------------------XLSX file------------------------");
-		    ReadDemo.sheetIterate(xsheet);
+		    out.println("--------------------XLS file sheets------------------------");
+		    ReadSheet.sheetIterate(sheet);
+		    out.println("--------------------XLSX file sheets------------------------");
+		    ReadSheet.sheetIterate(xsheet);
 		    file.close();
 		     
 		} catch (FileNotFoundException e) {
@@ -60,5 +60,12 @@ public class ListSheets {
 		} catch (IOException e) {
 		    e.printStackTrace();
 		}
+	}
+	
+	/**
+	 * listSheets
+	 */
+	public static void listSheets(){
+		
 	}
 }
