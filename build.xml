@@ -111,9 +111,8 @@
 	<!-- Help menu -->
 	<target name="help" description="help information" depends="check">
 		<echo>Reference: http://openhome.cc/Gossip/JUnit/JUnitReport.html</echo>
-		<echo>Sample cmd: ant test</echo>
-		<echo>Sample cmd: ant txt</echo>
-		<echo>Sample cmd: ant xml</echo>
-		<echo>Sample cmd: ant report</echo>
+		<echo>Sample cmd: ant runrd</echo>
+		<echo>Sample cmd: ant runrpd</echo>
+		<echo>Sample cmd: ant help</echo>
 	</target>
 </project>
