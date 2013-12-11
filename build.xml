@@ -5,7 +5,7 @@
 	<!-- Set up the properties -->
 	<target name="setProperties" description="set up properties">
 		<property name="project-name"       		value="JavaWithApachePOI"/>
-        <property name="readdemo-main-class"  		value="poi.excel.ReadDemo"/>
+        <property name="readdemo-main-class"  		value="demo.poi.excel.ReadDemo"/>
 		<property name="writedemo-main-class"  		value="poi.excel.WriteDemo"/>
 		<property name="readprotecteddemo-main-class"  		value="poi.excel.ReadProtectedDemo"/>
         <property name="class-path"         		value="."/>
@@ -39,8 +39,28 @@
     	<delete>
 			<fileset dir="${deploy-dir}" includes="**/*.jar"/>
 		</delete>
+    	<delete>
+			<fileset dir="${javadoc-dir}" includes="**/*.*"/>
+		</delete>
     </target>
-    
+	
+    <!-- Generate java document -->
+    <target name="doc" depends="check">
+        <javadoc destdir="${javadoc-dir}">
+		    <classpath> 
+		    	<pathelement location="${commons-codec-1.8.jar}"/>
+		    	<pathelement location="${dom4j-1.6.1.jar}"/>
+		    	<pathelement location="${xmlbeans-2.3.0.jar}"/>
+		    	<pathelement location="${poi-3.9.jar}"/>
+		    	<pathelement location="${poi-ooxml-3.9.jar}"/>
+		    	<pathelement location="${poi-ooxml-schemas-3.9.jar}"/>
+		    </classpath>
+            <fileset dir="${src-dir}" casesensitive="yes">
+            	<include name="**/*.java"/>
+            </fileset>
+        </javadoc>
+    </target>
+	
 	<!-- Create necessary directory -->
     <target name="prepare" depends="setProperties"> 
         <mkdir dir="${base-dir}"/>
@@ -65,6 +85,21 @@
 		</javac>
     </target>
 	
+    <!-- create the jar -->
+    <target name="build" depends="compile">
+        <jar jarfile="deploy/${project-name}.jar" basedir="${base-dir}">
+            <manifest>
+            	<attribute name="Manifest-Version" value="1.0" />
+            	<attribute name="Created-By" value="Chris Wong" />
+            </manifest>
+            <zipfileset src="${commons-codec-1.8.jar}" />
+    		<zipfileset src="${poi-3.9.jar}" />
+        	<zipfileset src="${dom4j-1.6.1.jar}" />
+        	<zipfileset src="${xmlbeans-2.3.0.jar}" />
+        	<zipfileset src="${poi-ooxml-3.9.jar}" />
+        	<zipfileset src="${poi-ooxml-schemas-3.9.jar}" />
+        </jar>
+    </target>
 	<!-- Run ${readdemo-main-class} independently -->
 	<target name="runrd" depends="compile">
         <java classname="${readdemo-main-class}" classpath="${base-dir}" >
@@ -107,12 +142,44 @@
         </java>
     </target>
 
+	<!-- Run by jar -->
+	
+	<!-- Run ${readdemo-main-class} by jar -->
+	<target name="jarrd" depends="build">
+		<java fork="true" failonerror="true" classname="${readdemo-main-class}" >
+		   <classpath>
+				<pathelement location="deploy/${project-name}.jar"/>
+		   </classpath>
+		</java>
+    </target>
+	
+	<!-- Run ${writedemo-main-class} by jar -->
+	<target name="jarwd" depends="build">
+		<java fork="true" failonerror="true" classname="${writedemo-main-class}" >
+		   <classpath>
+				<pathelement location="deploy/${project-name}.jar"/>
+		   </classpath>
+		</java>
+    </target>
+    	
+	<!-- Run ${readprotecteddemo-main-class} by jar -->
+	<target name="jarrpd" depends="build">
+		<java fork="true" failonerror="true" classname="${readprotecteddemo-main-class}" >
+		   <classpath>
+				<pathelement location="deploy/${project-name}.jar"/>
+		   </classpath>
+		</java>
+    </target>
+	<!-- Run by jar -->
 	
 	<!-- Help menu -->
 	<target name="help" description="help information" depends="check">
-		<echo>Reference: http://openhome.cc/Gossip/JUnit/JUnitReport.html</echo>
 		<echo>Sample cmd: ant runrd</echo>
+		<echo>Sample cmd: ant runwd</echo>
 		<echo>Sample cmd: ant runrpd</echo>
+		<echo>Sample cmd: ant jarrd</echo>
+		<echo>Sample cmd: ant jarwd</echo>
+		<echo>Sample cmd: ant jarrpd</echo>
 		<echo>Sample cmd: ant help</echo>
 	</target>
 </project>
