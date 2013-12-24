@@ -27,39 +27,6 @@ import static java.lang.System.out;
 public class ListSheets {
 	final static String XLSFILENAME = "resource\\sheets.xls";
 	final static String XLSXFILENAME = "resource\\sheets.xlsx";
-	
-	public static void main(String[] args){
-		try {
-		     
-		    FileInputStream file = new FileInputStream(new File(XLSFILENAME));
-		    FileInputStream xfile = new FileInputStream(new File(XLSXFILENAME));
-		     
-		    //Get the workbook instance for XLS file 
-		    HSSFWorkbook workbook = new HSSFWorkbook(file);
-		 
-		    //Get the workbook instance for XLSX file 
-		    XSSFWorkbook xworkbook = new XSSFWorkbook(xfile);
-		    
-		    //Get first sheet from the workbook, for XLS file
-		    HSSFSheet sheet = workbook.getSheetAt(0);
-		    
-		    //Get first sheet from the workbook, for XLSX file
-		    XSSFSheet xsheet = xworkbook.getSheetAt(0);
-		    
-		    //Iterate through each rows from first sheet
-		    out.println("--------------------XLS file sheets------------------------");
-		    ReadSheet.sheetIterate(sheet);
-		    out.println("--------------------XLSX file sheets------------------------");
-		    ReadSheet.sheetIterate(xsheet);
-		    file.close();
-		     
-		} catch (FileNotFoundException e) {
-		    e.printStackTrace();
-		} catch (IOException e) {
-		    e.printStackTrace();
-		}
-	}
-	
 
 
 	/**

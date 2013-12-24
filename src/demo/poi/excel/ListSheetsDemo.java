@@ -92,6 +92,12 @@ public class ListSheetsDemo {
 		}
 	}
 	
+	/**
+	 * Read an excel file and show rows of a single sheet by getSheetObject2DArray
+	 * 
+	 * @param filename		excel file name
+	 * @param sheetIndex	sheet index
+	 */
 	public static void readExcelObject2DArray(String filename, int sheetIndex){
 		ArrayList<ArrayList<Object>> Object2DArray = ListSheets.getSheetObject2DArray(filename, sheetIndex);
 		
