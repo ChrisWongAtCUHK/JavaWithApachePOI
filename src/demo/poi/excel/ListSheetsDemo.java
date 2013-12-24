@@ -1,6 +1,10 @@
 package demo.poi.excel;
 
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Iterator;
+import java.util.Map;
+import java.util.Map.Entry;
 
 import org.apache.poi.hssf.usermodel.HSSFSheet;
 import org.apache.poi.xssf.usermodel.XSSFSheet;
@@ -55,7 +59,11 @@ public class ListSheetsDemo {
 		readExcelObject2DArray(xlsFileName, 0);
 		readExcelObject2DArray(xlsFileName, 1);
 		readExcelObject2DArray(xlsFileName, 2);
-		//readExcel(testxlsx1, 0);
+		
+		// tests for showing all sheets of an excel file
+		readAllSheets(txtFileName);
+		readAllSheets(xlsFileName);
+		readAllSheets(xlsxFileName);
 	}
 	
 	/**
@@ -65,9 +73,7 @@ public class ListSheetsDemo {
 	 */
 	public static void readExcel(String filename){
 		ArrayList<String> names = ListSheets.getNames(filename);
-		if(names == null){
-			System.out.println(filename + " is not an excel file");
-		} else {
+		if(names != null){
 			for(String name: names){
 				System.out.println(name);
 			}
@@ -102,7 +108,6 @@ public class ListSheetsDemo {
 		ArrayList<ArrayList<Object>> Object2DArray = ListSheets.getSheetObject2DArray(filename, sheetIndex);
 		
 		if(Object2DArray == null){
-			System.out.println(filename + " is not an excel file");
 			return;
 		}
 		
@@ -112,5 +117,54 @@ public class ListSheetsDemo {
 			}
 			System.out.println();
 		 }
+	}
+	
+	/**
+	 * Read an excel file and show rows of a single sheet by getSheetObject2DArray
+	 * 
+	 * @param filename		excel file name
+	 * @param sheetIndex	sheet index
+	 */
+	public static void readExcelObject2DArray(String filename, String sheetName){
+		ArrayList<ArrayList<Object>> Object2DArray = ListSheets.getSheetObject2DArray(filename, sheetName);
+		
+		if(Object2DArray == null){
+			return;
+		}
+		
+		for(ArrayList<Object> objects: Object2DArray){
+			for(Object object: objects){
+				System.out.print(object + "\t\t\t");
+			}
+			System.out.println();
+		 }
+	}
+
+	public static void readAllSheets(String filename){
+		HashMap<String, ArrayList<ArrayList<Object>>> sheets = ListSheets.getSheets(filename);
+		
+		// invalid excel file
+		if(sheets == null){
+			return;
+		}
+		
+		Iterator<Entry<String, ArrayList<ArrayList<Object>>>> it = sheets.entrySet().iterator();
+	    while (it.hasNext()) {
+	        Map.Entry<String, ArrayList<ArrayList<Object>>> pairs = (Map.Entry<String, ArrayList<ArrayList<Object>>>)it.next();
+	        System.out.println("+++++++++++++++++" + pairs.getKey() + "+++++++++++++++++");
+	        ArrayList<ArrayList<Object>> sheetObject2DArrayList = pairs.getValue();
+	        
+	        if(sheetObject2DArrayList != null){
+		        for(ArrayList<Object> objects: sheetObject2DArrayList){
+					for(Object object: objects){
+						System.out.print(object + "\t\t\t");
+					}
+					System.out.println();
+				}
+	        }
+
+	        
+	        it.remove(); // avoids a ConcurrentModificationException
+	    }
 	}
 }
