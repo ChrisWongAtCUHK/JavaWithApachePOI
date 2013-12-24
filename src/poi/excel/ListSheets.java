@@ -64,18 +64,19 @@ public class ListSheets {
 	}
 	
 
+
 	/**
 	 * Get names of sheets
 	 * 
-	 * @return names of sheets
+	 * @param 		filename name of excel file
+	 * @return 		names of sheets
 	 */
 	public static ArrayList<String> getNames(String filename){
-		// Check the type of excel file
-		// Use HSSF or XSSF accordingly
+		// Check the type of excel file, use HSSF or XSSF accordingly
 		String excelType = ExcelFile.excelType(filename);
 		
 		// ArrayList to store names of sheets
-		ArrayList<String> namesArrayList = new ArrayList<String>();
+		ArrayList<String> names = new ArrayList<String>();
 		
 		if(excelType == null){
 			// neither xls nor xlsx
@@ -90,10 +91,10 @@ public class ListSheets {
 			    
 			    // get the size of workbook
 			    int numberOfSheets = workbook.getNumberOfSheets();
-
+			    
 			    // loop through the workbook, add the name of sheet to the arraylist one by one
 			    for(int i = 0; i < numberOfSheets; i++){
-			    	namesArrayList.add(workbook.getSheetName(i));
+			    	names.add(workbook.getSheetName(i));
 			    }
 			    
 			} catch (FileNotFoundException e) {
@@ -111,11 +112,10 @@ public class ListSheets {
 			    
 			    // get the size of workbook
 			    int numberOfSheets = xworkbook.getNumberOfSheets();
-			    
+	
 			    // loop through the workbook, add the name of sheet to the arraylist one by one
 			    for(int i = 0; i < numberOfSheets; i++){
-			    	
-			    	namesArrayList.add(xworkbook.getSheetName(i));
+			    	names.add(xworkbook.getSheetName(i));
 			    }
 			    
 			} catch (FileNotFoundException e) {
@@ -125,6 +125,63 @@ public class ListSheets {
 			}
 		}
 		
-		return namesArrayList;
+		return names;
+	}
+
+	/**
+	 * Get the rows of a single sheet, store the content in the form of string
+	 * 
+	 * @param filename		filename name of excel file
+	 * @param sheetIndex	sheet index
+	 * @return				rows of a single
+	 */
+	public static Object getSheet(String filename, int sheetIndex){
+		// Check the type of excel file, use HSSF or XSSF accordingly
+		String excelType = ExcelFile.excelType(filename);
+
+		if(excelType == null){
+			// neither xls nor xlsx
+			return null;
+		} else if(excelType.equals("xls")){
+
+			try {
+				// get the file input stream
+				FileInputStream file = new FileInputStream(new File(filename));
+				
+				// get the workbook instance for XLS file 
+			    HSSFWorkbook workbook = new HSSFWorkbook(file);
+			    
+			    // get a single sheet in the workbook
+			    HSSFSheet sheet = workbook.getSheetAt(sheetIndex);
+			    
+			    return sheet;
+			    
+			    
+			} catch (FileNotFoundException e) {
+			    e.printStackTrace();
+			} catch (IOException e) {
+			    e.printStackTrace();
+			}
+		} else if(excelType.equals("xlsx")){
+			try {
+				// get the file input stream
+				FileInputStream xfile = new FileInputStream(new File(filename));
+				
+				// get the workbook instance for XLSX file 
+				 XSSFWorkbook xworkbook = new XSSFWorkbook(xfile);
+			    
+				// get a single sheet in the workbook
+				XSSFSheet sheet = xworkbook.getSheetAt(sheetIndex);
+	
+				return sheet;
+			    
+			} catch (FileNotFoundException e) {
+			    e.printStackTrace();
+			} catch (IOException e) {
+			    e.printStackTrace();
+			}
+		}
+		
+		return null;
 	}
 }

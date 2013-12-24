@@ -1,5 +1,6 @@
 package poi.excel;
 
+import java.util.ArrayList;
 import java.util.Iterator;
 
 import org.apache.poi.ss.usermodel.Cell;
@@ -45,10 +46,11 @@ public class ReadSheet {
 	}
 	
 	// Iterate the rows of the sheet from XLS/XLS file
-	public static Object[][] getSheet(Iterable<Row> sheet){
-		Object[][] objects = new Object[99][99];
+	public static ArrayList<ArrayList<Object>> getSheet(Iterable<Row> sheet){
+		ArrayList<ArrayList<Object>> object2DArray = new ArrayList<ArrayList<Object>>();
 		Iterator<Row> rowIterator = sheet.iterator();
 		while(rowIterator.hasNext()) {
+			ArrayList<Object> objects = new ArrayList<Object>();
 		    Row row = rowIterator.next();
 		     
 		    //For each row, iterate through each columns
@@ -60,12 +62,15 @@ public class ReadSheet {
 		        switch(cell.getCellType()) {
 		            case Cell.CELL_TYPE_BOOLEAN:
 		                System.out.print(cell.getBooleanCellValue() + "\t\t");
+		                objects.add(cell.getBooleanCellValue());
 		                break;
 		            case Cell.CELL_TYPE_NUMERIC:
 		                System.out.print(cell.getNumericCellValue() + "\t\t");
+		                objects.add(cell.getNumericCellValue());
 		                break;
 		            case Cell.CELL_TYPE_STRING:
 		                System.out.print(cell.getStringCellValue() + "\t\t");
+		                objects.add(cell.getNumericCellValue());
 		                break;
 		        }
 		        
@@ -73,6 +78,6 @@ public class ReadSheet {
 		    System.out.println();
 		}
 		
-		return objects;
+		return object2DArray;
 	}
 }

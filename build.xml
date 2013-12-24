@@ -4,20 +4,20 @@
 	
 	<!-- Set up the properties -->
 	<target name="setProperties" description="set up properties">
-		<property name="project-name"       		value="JavaWithApachePOI"/>
-		<property name="excelfile-main-class"  		value="demo.poi.excel.ExcelFileDemo"/>
-        <property name="readdemo-main-class"  		value="demo.poi.excel.ReadDemo"/>
-		<property name="writedemo-main-class"  		value="poi.excel.WriteDemo"/>
-		<property name="readprotecteddemo-main-class"  		value="poi.excel.ReadProtectedDemo"/>
+		<property name="project-name"       			value="JavaWithApachePOI"/>
+		<property name="excelfile-main-class"  			value="demo.poi.excel.ExcelFileDemo"/>
 		<property name="listsheets-main-class"  		value="demo.poi.excel.ListSheetsDemo"/>
-		<property name="class-path"         		value="."/>
-        <property name="base-dir"           		value="bin"/>
-		<property name="deploy-dir"          	 	value="deploy"/>
-        <property name="javadoc-dir"       			value="doc"/>
-		<property name="lib-dir"	       			value="lib"/>
-		<property name="ref-dir"       				value="ref"/>
-		<property name="resource-dir"       		value="resource"/>
-		<property name="src-dir"       				value="src"/>
+        <property name="readdemo-main-class"  			value="demo.poi.excel.ReadDemo"/>
+		<property name="readprotecteddemo-main-class"  	value="poi.excel.ReadProtectedDemo"/>
+		<property name="writedemo-main-class"  			value="poi.excel.WriteDemo"/>
+		<property name="class-path"         			value="."/>
+        <property name="base-dir"           			value="bin"/>
+		<property name="deploy-dir"          	 		value="deploy"/>
+        <property name="javadoc-dir"       				value="doc"/>
+		<property name="lib-dir"	       				value="lib"/>
+		<property name="ref-dir"       					value="ref"/>
+		<property name="resource-dir"       			value="resource"/>
+		<property name="src-dir"       					value="src"/>
 		
 		<!-- Necessary external archives(jar) -->
 		<property name="commons-codec-1.8.jar"		value="${lib-dir}/commons-codec-1.8/commons-codec-1.8.jar"/>
@@ -185,6 +185,15 @@
 		</java>
     </target>
 		
+	<!-- Run ${excelfile-main-class} by jar -->
+	<target name="jarls" depends="build">
+		<java fork="true" failonerror="true" classname="${listsheets-main-class}" >
+		   <classpath>
+				<pathelement location="deploy/${project-name}.jar"/>
+		   </classpath>
+		</java>
+    </target>
+	
 	<!-- Run ${readdemo-main-class} by jar -->
 	<target name="jarrd" depends="build">
 		<java fork="true" failonerror="true" classname="${readdemo-main-class}" >
