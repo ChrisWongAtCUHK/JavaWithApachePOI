@@ -26,6 +26,13 @@ public class ListSheetsDemo {
 	private final static String XLSRILENAME = "resource\\test.xls";
 	private final static String XLSXFILENAME = "resource\\test.xlsx";
 
+	private final static String DEFAULT = "${test}";						// IMPORTANT: weak point in apache ant java task
+	private final static String NAMES = "n";
+	private final static String SINGLESHEET = "ss";
+	private final static String SINGLESHEETGETSHEETOBJECT2DARRAY = "ss2d";
+	private final static String ALLSHEETS = "as";
+	private final static String ALL = "all";
+	
 	private final static String testxlsx1 = "resource\\ETL_DEV_Account.xlsx";
 	
 	/**
@@ -35,37 +42,53 @@ public class ListSheetsDemo {
 	 */
 	public static void main(String[] args){
 		
-		// tests for listing out the names of sheets
-		readExcel(TXTFILENAME);
-		readExcel(XLSRILENAME);
-		readExcel(XLSXFILENAME);
-		
-		// tests for showing the cells of a single sheet in a xls file
-		System.out.println("======================Tests for showing the cells of xls file==========================================");
-		readExcel(TXTFILENAME, 0);
-		readExcel(XLSRILENAME, 0);
-		readExcel(XLSRILENAME, 1);
-		readExcel(XLSRILENAME, 2);
 
 		
+		// tests for listing out the names of sheets
+		if((args.length == 0) || (args[0].equals(DEFAULT)) || (args[0].equals(NAMES)) || (args[0].equals(ALL))){
+			readExcel(TXTFILENAME);
+			readExcel(XLSRILENAME);
+			readExcel(XLSXFILENAME);
+		}	
+			
+		// tests for showing the cells of a single sheet in a xls file
+		if((args.length == 0) || (args[0].equals(DEFAULT)) || (args[0].equals(SINGLESHEET)) || (args[0].equals(ALL))){
+			System.out.println("======================Tests for showing the cells of xls file==========================================");
+			readExcel(TXTFILENAME, 0);
+			readExcel(XLSRILENAME, 0);
+			readExcel(XLSRILENAME, 1);
+			readExcel(XLSRILENAME, 2);
+		}	
+
+
 		// tests for showing the cells of a single sheet in a xlsx file
-		System.out.println("======================Tests for showing the cells of xlsx file==========================================");
-		readExcel(TXTFILENAME, 0);
-		readExcel(XLSXFILENAME, 0);
-		readExcel(XLSXFILENAME, 1);
-		readExcel(XLSXFILENAME, 2);
+		if((args.length == 0) || (args[0].equals(DEFAULT)) || (args[0].equals(SINGLESHEET)) || (args[0].equals(ALL))){
+			System.out.println("======================Tests for showing the cells of xlsx file==========================================");
+			readExcel(TXTFILENAME, 0);
+			readExcel(XLSXFILENAME, 0);
+			readExcel(XLSXFILENAME, 1);
+			readExcel(XLSXFILENAME, 2);
+		}
 		
 		// tests for showing the cells of a single sheet in a xls file by getSheetObject2DArray
-		System.out.println("======================Tests for showing the cells of xlsx file by getSheetObject2DArray ==========================================");
-		readExcelObject2DArray(TXTFILENAME, 0);
-		readExcelObject2DArray(XLSRILENAME, 0);
-		readExcelObject2DArray(XLSRILENAME, 1);
-		readExcelObject2DArray(XLSRILENAME, 2);
+		if((args.length == 0) || (args[0].equals(DEFAULT)) || (args[0].equals(SINGLESHEETGETSHEETOBJECT2DARRAY)) || (args[0].equals(ALL))){
+			System.out.println("======================Tests for showing the cells of excel file by getSheetObject2DArray ==========================================");
+			readExcelObject2DArray(TXTFILENAME, 0);
+			readExcelObject2DArray(XLSRILENAME, 0);
+			readExcelObject2DArray(XLSRILENAME, 1);
+			readExcelObject2DArray(XLSRILENAME, 2);
+			readExcelObject2DArray(XLSXFILENAME, 0);
+			readExcelObject2DArray(XLSXFILENAME, 1);
+			readExcelObject2DArray(XLSXFILENAME, 2);
+		}
 		
 		// tests for showing all sheets of an excel file
-		readAllSheets(TXTFILENAME);
-		readAllSheets(XLSRILENAME);
-		readAllSheets(XLSXFILENAME);
+		if((args.length == 0) || (args[0].equals(DEFAULT)) || (args[0].equals(ALLSHEETS)) || (args[0].equals(ALL))){
+			System.out.println("======================Tests for showing all sheets of an excel file======================");
+			readAllSheets(TXTFILENAME);
+			readAllSheets(XLSRILENAME);
+			readAllSheets(XLSXFILENAME);
+		}
 	}
 	
 	/**
