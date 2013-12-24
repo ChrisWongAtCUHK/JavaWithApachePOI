@@ -33,7 +33,6 @@ public class ReadDemo {
 	public static void main(String[] args){
 		try {
 		    
-			File file = new File(xlsFileName);
 		    FileInputStream fis = new FileInputStream(new File(xlsFileName));
 		    FileInputStream xfis = new FileInputStream(new File(xlsxFileName));
 		     
@@ -56,8 +55,8 @@ public class ReadDemo {
 		    ReadSheet.sheetIterate(xsheet);
 		    
 		    // getSheetObject2DArray xls
-		    ArrayList<ArrayList<Object>> object2DArray = ReadSheet.getSheetObject2DArray(sheet);
-		    for(ArrayList<Object> objects: object2DArray){
+		    ArrayList<ArrayList<Object>> object2DArrayXls = ReadSheet.getSheetObject2DArray(sheet);
+		    for(ArrayList<Object> objects: object2DArrayXls){
 		    	for(Object object: objects){
 		    		System.out.print(object + "\t\t\t");
 		    	}
@@ -65,8 +64,8 @@ public class ReadDemo {
 		    }
 		    
 		    // getSheetObject2DArray xlsx
-		    object2DArray = ReadSheet.getSheetObject2DArray(xsheet);
-		    for(ArrayList<Object> objects: object2DArray){
+		    ArrayList<ArrayList<Object>> object2DArrayXlsx = ReadSheet.getSheetObject2DArray(xsheet);
+		    for(ArrayList<Object> objects: object2DArrayXlsx){
 		    	for(Object object: objects){
 		    		System.out.print(object + "\t\t\t");
 		    	}
