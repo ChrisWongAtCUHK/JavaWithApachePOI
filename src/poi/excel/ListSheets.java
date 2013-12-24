@@ -5,7 +5,6 @@ import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.Iterator;
 
 //For .xls, libraries included: poi-3.9-20121203.jar
 import org.apache.poi.hssf.usermodel.HSSFSheet;
@@ -15,8 +14,6 @@ import org.apache.poi.hssf.usermodel.HSSFWorkbook;
 import org.apache.poi.xssf.usermodel.XSSFSheet;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 
-import org.apache.poi.ss.usermodel.Cell;
-import org.apache.poi.ss.usermodel.Row;
 import static java.lang.System.out;
 
 /**
@@ -180,6 +177,25 @@ public class ListSheets {
 			} catch (IOException e) {
 			    e.printStackTrace();
 			}
+		}
+		
+		return null;
+	}
+	
+	/**
+	 * Get a 2d array of objects in a single sheet
+	 * 
+	 * @param filename		filename name of excel file
+	 * @param sheetIndex	sheet index
+	 * @return				a 2D array of objects
+	 */
+	public static ArrayList<ArrayList<Object>> getSheetObject2DArray(String filename, int sheetIndex){
+
+		Object sheet = getSheet(filename, sheetIndex);
+		if(sheet instanceof HSSFSheet){
+			return ReadSheet.getSheetObject2DArray((HSSFSheet)sheet);
+		} else if(sheet instanceof XSSFSheet){
+			return ReadSheet.getSheetObject2DArray((XSSFSheet)sheet);
 		}
 		
 		return null;

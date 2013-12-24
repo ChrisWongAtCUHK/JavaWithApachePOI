@@ -49,6 +49,12 @@ public class ListSheetsDemo {
 		readExcel(xlsxFileName, 1);
 		readExcel(xlsxFileName, 2);
 		
+		// tests for showing the cells of a single sheet in a xls file by getSheetObject2DArray
+		System.out.println("======================Tests for showing the cells of xlsx file==========================================");
+		readExcelObject2DArray(txtFileName, 0);
+		readExcelObject2DArray(xlsFileName, 0);
+		readExcelObject2DArray(xlsFileName, 1);
+		readExcelObject2DArray(xlsFileName, 2);
 		//readExcel(testxlsx1, 0);
 	}
 	
@@ -84,5 +90,21 @@ public class ListSheetsDemo {
 			System.out.println("--------------------XLSX file:" + filename + ", sheet " + sheetIndex + "------------------------");
 		    ReadSheet.sheetIterate((XSSFSheet)sheet);
 		}
+	}
+	
+	public static void readExcelObject2DArray(String filename, int sheetIndex){
+		ArrayList<ArrayList<Object>> Object2DArray = ListSheets.getSheetObject2DArray(filename, sheetIndex);
+		
+		if(Object2DArray == null){
+			System.out.println(filename + " is not an excel file");
+			return;
+		}
+		
+		for(ArrayList<Object> objects: Object2DArray){
+			for(Object object: objects){
+				System.out.print(object + "\t\t\t");
+			}
+			System.out.println();
+		 }
 	}
 }
