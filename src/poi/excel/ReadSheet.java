@@ -46,7 +46,7 @@ public class ReadSheet {
 	}
 	
 	// Iterate the rows of the sheet from XLS/XLS file
-	public static ArrayList<ArrayList<Object>> getSheet(Iterable<Row> sheet){
+	public static ArrayList<ArrayList<Object>> getSheetObject2DArray(Iterable<Row> sheet){
 		ArrayList<ArrayList<Object>> object2DArray = new ArrayList<ArrayList<Object>>();
 		Iterator<Row> rowIterator = sheet.iterator();
 		while(rowIterator.hasNext()) {
@@ -61,21 +61,17 @@ public class ReadSheet {
 		         
 		        switch(cell.getCellType()) {
 		            case Cell.CELL_TYPE_BOOLEAN:
-		                System.out.print(cell.getBooleanCellValue() + "\t\t");
 		                objects.add(cell.getBooleanCellValue());
 		                break;
 		            case Cell.CELL_TYPE_NUMERIC:
-		                System.out.print(cell.getNumericCellValue() + "\t\t");
 		                objects.add(cell.getNumericCellValue());
 		                break;
 		            case Cell.CELL_TYPE_STRING:
-		                System.out.print(cell.getStringCellValue() + "\t\t");
-		                objects.add(cell.getNumericCellValue());
+		                objects.add(cell.getStringCellValue());
 		                break;
 		        }
-		        
 		    }
-		    System.out.println();
+		    object2DArray.add(objects);
 		}
 		
 		return object2DArray;

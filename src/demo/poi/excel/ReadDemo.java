@@ -5,6 +5,7 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.util.ArrayList;
 
 // For .xls, libraries included: poi-3.9-20121203.jar
 import org.apache.poi.hssf.usermodel.HSSFSheet;
@@ -53,6 +54,24 @@ public class ReadDemo {
 		    ReadSheet.sheetIterate(sheet);
 		    System.out.println("--------------------XLSX file------------------------");
 		    ReadSheet.sheetIterate(xsheet);
+		    
+		    // getSheetObject2DArray xls
+		    ArrayList<ArrayList<Object>> object2DArray = ReadSheet.getSheetObject2DArray(sheet);
+		    for(ArrayList<Object> objects: object2DArray){
+		    	for(Object object: objects){
+		    		System.out.print(object + "\t\t\t");
+		    	}
+		    	System.out.println();
+		    }
+		    
+		    // getSheetObject2DArray xlsx
+		    object2DArray = ReadSheet.getSheetObject2DArray(xsheet);
+		    for(ArrayList<Object> objects: object2DArray){
+		    	for(Object object: objects){
+		    		System.out.print(object + "\t\t\t");
+		    	}
+		    	System.out.println();
+		    }
 		    fis.close();
 		     
 		} catch (FileNotFoundException e) {
