@@ -171,7 +171,7 @@
 		    	<pathelement location="${poi-ooxml-3.9.jar}"/>
 		    	<pathelement location="${poi-ooxml-schemas-3.9.jar}"/>
 		    </classpath>
-        	<arg value="${test}"/>
+        	<arg value="${demo}"/>
         </java>
     </target>
 		    	
@@ -192,7 +192,7 @@
 		   <classpath>
 				<pathelement location="deploy/${project-name}.jar"/>
 		   </classpath>
-			<arg value="${test}"/>
+			<arg value="${demo}"/>
 		</java>
     </target>
 	
@@ -227,13 +227,20 @@
 	<!-- Help menu -->
 	<target name="help" description="help information" depends="check">
 		<echo>Sample cmd: ant runls</echo>
-		<echo>    1: ant runls -Dtest=names</echo>
-		<echo>    2: ant runls -Dtest=singlesheet</echo>
-		<echo>    3: ant runls -Dtest=singlesheetget</echo>
-		<echo>    4: ant runls -Dtest=allsheets</echo>
+		<echo>    1: ant runls -Ddemo=n</echo>
+		<echo>    2: ant runls -Ddemo=ss</echo>
+		<echo>    3: ant runls -Ddemo=ss2d</echo>
+		<echo>    4: ant runls -Ddemo=as</echo>
+		<echo>    5: ant runls -Ddemo=all</echo>
 		<echo>Sample cmd: ant runrd</echo>
 		<echo>Sample cmd: ant runwd</echo>
 		<echo>Sample cmd: ant runrpd</echo>
+		<echo>Sample cmd: ant jarls</echo>
+		<echo>    1: ant jarls -Ddemo=n</echo>
+		<echo>    2: ant jarls -Ddemo=ss</echo>
+		<echo>    3: ant jarls -Ddemo=ss2d</echo>
+		<echo>    4: ant jarls -Ddemo=as</echo>
+		<echo>    5: ant jarls -Ddemo=all</echo>
 		<echo>Sample cmd: ant jarrd</echo>
 		<echo>Sample cmd: ant jarwd</echo>
 		<echo>Sample cmd: ant jarrpd</echo>

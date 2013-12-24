@@ -26,7 +26,7 @@ public class ListSheetsDemo {
 	private final static String XLSRILENAME = "resource\\test.xls";
 	private final static String XLSXFILENAME = "resource\\test.xlsx";
 
-	private final static String DEFAULT = "${test}";						// IMPORTANT: weak point in apache ant java task
+	private final static String DEFAULT = "${demo}";						// IMPORTANT: weak point in apache ant java task
 	private final static String NAMES = "n";
 	private final static String SINGLESHEET = "ss";
 	private final static String SINGLESHEETGETSHEETOBJECT2DARRAY = "ss2d";

@@ -15,8 +15,6 @@ import org.apache.poi.hssf.usermodel.HSSFWorkbook;
 import org.apache.poi.xssf.usermodel.XSSFSheet;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 
-import static java.lang.System.out;
-
 /**
  * <p>
  *  ListSheets
@@ -29,8 +27,6 @@ public class ListSheets {
 	private final static String INVALIDSHEETINDEX = "INVALID_SHEET_INDEX";
 	private final static String INVALIDSHEETNAME = "INVALID_SHEET_NAME";
 	private final static String NONEXCEL = "NON_EXCEL";
-	final static String XLSFILENAME = "resource\\sheets.xls";
-	final static String XLSXFILENAME = "resource\\sheets.xlsx";
 
 	/**
 	 * @param filename	filename name of excel file
