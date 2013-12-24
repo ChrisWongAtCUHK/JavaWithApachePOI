@@ -273,7 +273,7 @@ public class ListSheets {
 	/**
 	 * Get a 2d array of objects in a single sheet
 	 * 
-	 * @param filename		filename name of excel file
+	 * @param filename		file name of excel file
 	 * @param sheetIndex	sheet index
 	 * @return				a 2D array of objects
 	 */
@@ -308,7 +308,7 @@ public class ListSheets {
 	/**
 	 * Get a 2d array of objects in a single sheet
 	 * 
-	 * @param filename		filename name of excel file
+	 * @param filename		file name of excel file
 	 * @param sheetIndex	sheet index
 	 * @return				a 2D array of objects
 	 */
@@ -339,7 +339,13 @@ public class ListSheets {
 		return null;
 	}
 	
-	public static HashMap<String, ArrayList<ArrayList<Object>>> getSheets(String filename){
+	/**
+	 * Get the sheet name & content of all sheets
+	 * 
+	 * @param filename		file name of excel file
+	 * @return				all sheets with sheet name as key & content as value
+	 */
+	public static HashMap<String, ArrayList<ArrayList<Object>>> getAllSheets(String filename){
 		// all sheets in one HashMap<sheetName, sheet2Darray>
 		HashMap<String, ArrayList<ArrayList<Object>>> sheets = new HashMap<String, ArrayList<ArrayList<Object>>>();
 		ArrayList<String> names = getNames(filename);

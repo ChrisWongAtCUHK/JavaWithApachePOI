@@ -22,9 +22,10 @@ import poi.excel.ReadSheet;
  */
 public class ListSheetsDemo {
 	
-	private final static String txtFileName = "resource\\test.txt";
-	private final static String xlsFileName = "resource\\test.xls";
-	private final static String xlsxFileName = "resource\\test.xlsx";
+	private final static String TXTFILENAME = "resource\\test.txt";
+	private final static String XLSRILENAME = "resource\\test.xls";
+	private final static String XLSXFILENAME = "resource\\test.xlsx";
+
 	private final static String testxlsx1 = "resource\\ETL_DEV_Account.xlsx";
 	
 	/**
@@ -33,37 +34,38 @@ public class ListSheetsDemo {
 	 * @param args	arguments of running java
 	 */
 	public static void main(String[] args){
+		
 		// tests for listing out the names of sheets
-		readExcel(txtFileName);
-		readExcel(xlsFileName);
-		readExcel(xlsxFileName);
+		readExcel(TXTFILENAME);
+		readExcel(XLSRILENAME);
+		readExcel(XLSXFILENAME);
 		
 		// tests for showing the cells of a single sheet in a xls file
 		System.out.println("======================Tests for showing the cells of xls file==========================================");
-		readExcel(txtFileName, 0);
-		readExcel(xlsFileName, 0);
-		readExcel(xlsFileName, 1);
-		readExcel(xlsFileName, 2);
+		readExcel(TXTFILENAME, 0);
+		readExcel(XLSRILENAME, 0);
+		readExcel(XLSRILENAME, 1);
+		readExcel(XLSRILENAME, 2);
 
 		
 		// tests for showing the cells of a single sheet in a xlsx file
 		System.out.println("======================Tests for showing the cells of xlsx file==========================================");
-		readExcel(txtFileName, 0);
-		readExcel(xlsxFileName, 0);
-		readExcel(xlsxFileName, 1);
-		readExcel(xlsxFileName, 2);
+		readExcel(TXTFILENAME, 0);
+		readExcel(XLSXFILENAME, 0);
+		readExcel(XLSXFILENAME, 1);
+		readExcel(XLSXFILENAME, 2);
 		
 		// tests for showing the cells of a single sheet in a xls file by getSheetObject2DArray
-		System.out.println("======================Tests for showing the cells of xlsx file==========================================");
-		readExcelObject2DArray(txtFileName, 0);
-		readExcelObject2DArray(xlsFileName, 0);
-		readExcelObject2DArray(xlsFileName, 1);
-		readExcelObject2DArray(xlsFileName, 2);
+		System.out.println("======================Tests for showing the cells of xlsx file by getSheetObject2DArray ==========================================");
+		readExcelObject2DArray(TXTFILENAME, 0);
+		readExcelObject2DArray(XLSRILENAME, 0);
+		readExcelObject2DArray(XLSRILENAME, 1);
+		readExcelObject2DArray(XLSRILENAME, 2);
 		
 		// tests for showing all sheets of an excel file
-		readAllSheets(txtFileName);
-		readAllSheets(xlsFileName);
-		readAllSheets(xlsxFileName);
+		readAllSheets(TXTFILENAME);
+		readAllSheets(XLSRILENAME);
+		readAllSheets(XLSXFILENAME);
 	}
 	
 	/**
@@ -140,8 +142,13 @@ public class ListSheetsDemo {
 		 }
 	}
 
+	/**
+	 * Read an excel file and show all sheets
+	 * 
+	 * @param filename		excel file name
+	 */
 	public static void readAllSheets(String filename){
-		HashMap<String, ArrayList<ArrayList<Object>>> sheets = ListSheets.getSheets(filename);
+		HashMap<String, ArrayList<ArrayList<Object>>> sheets = ListSheets.getAllSheets(filename);
 		
 		// invalid excel file
 		if(sheets == null){
@@ -151,11 +158,15 @@ public class ListSheetsDemo {
 		Iterator<Entry<String, ArrayList<ArrayList<Object>>>> it = sheets.entrySet().iterator();
 	    while (it.hasNext()) {
 	        Map.Entry<String, ArrayList<ArrayList<Object>>> pairs = (Map.Entry<String, ArrayList<ArrayList<Object>>>)it.next();
-	        System.out.println("+++++++++++++++++" + pairs.getKey() + "+++++++++++++++++");
-	        ArrayList<ArrayList<Object>> sheetObject2DArrayList = pairs.getValue();
 	        
-	        if(sheetObject2DArrayList != null){
-		        for(ArrayList<Object> objects: sheetObject2DArrayList){
+	        // key is the sheet name
+	        System.out.println("+++++++++++++++++" + pairs.getKey() + "+++++++++++++++++");
+	        ArrayList<ArrayList<Object>> sheetObject2DArray = pairs.getValue();
+	        
+	        // avoid invalid cases
+	        if(sheetObject2DArray != null){
+	        	// value is sheet content
+		        for(ArrayList<Object> objects: sheetObject2DArray){
 					for(Object object: objects){
 						System.out.print(object + "\t\t\t");
 					}
@@ -163,7 +174,6 @@ public class ListSheetsDemo {
 				}
 	        }
 
-	        
 	        it.remove(); // avoids a ConcurrentModificationException
 	    }
 	}
