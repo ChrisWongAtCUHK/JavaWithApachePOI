@@ -32,9 +32,7 @@ public class ListSheetsDemo {
 	private final static String SINGLESHEETGETSHEETOBJECT2DARRAY = "ss2d";
 	private final static String ALLSHEETS = "as";
 	private final static String ALL = "all";
-	
-	private final static String testxlsx1 = "resource\\ETL_DEV_Account.xlsx";
-	
+		
 	/**
 	 * Main program
 	 * 
