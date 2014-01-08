@@ -40,8 +40,6 @@ public class ListSheetsDemo {
 	 */
 	public static void main(String[] args){
 		
-
-		
 		// tests for listing out the names of sheets
 		if((args.length == 0) || (args[0].equals(DEFAULT)) || (args[0].equals(NAMES)) || (args[0].equals(ALL))){
 			readExcel(TXTFILENAME);
