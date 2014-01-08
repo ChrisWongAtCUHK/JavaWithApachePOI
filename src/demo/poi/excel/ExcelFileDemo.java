@@ -1,8 +1,6 @@
 package demo.poi.excel;
 
 // Self-defined class
-import java.io.File;
-
 import poi.excel.ExcelFile;
 import static java.lang.System.out;
 

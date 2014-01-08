@@ -8,7 +8,7 @@ import java.util.Map.Entry;
 
 /**
  * <p>
- *  SearchExcel searhes content in excel file
+ *  SearchExcel searches content in excel file
  * </p>
  * @author Chris Wong
  *
