@@ -19,25 +19,25 @@ import org.apache.poi.xslf.usermodel.XSLFTextShape;
  */
 public class CreateNewPresentation {
 	public static void main(String[] args) {
-		XMLSlideShow slideShow = new XMLSlideShow();
+		XMLSlideShow ppt = new XMLSlideShow();
 		
 		// create a blank slide
-		XSLFSlide slide = slideShow.createSlide();
+		XSLFSlide slide = ppt.createSlide();
 		
 		// there can be multiple masters each referencing a number of layouts
 	    // for demonstration purposes we use the first (default) slide master
-	    XSLFSlideMaster defaultMaster = slideShow.getSlideMasters()[0];
+	    XSLFSlideMaster defaultMaster = ppt.getSlideMasters()[0];
 
 	    // title slide
 	    XSLFSlideLayout titleLayout = defaultMaster.getLayout(SlideLayout.TITLE);
 	    // fill the placeholders
-	    XSLFSlide slide1 = slideShow.createSlide(titleLayout);
+	    XSLFSlide slide1 = ppt.createSlide(titleLayout);
 	    XSLFTextShape title1 = slide1.getPlaceholder(0);
 	    title1.setText("First Title");
 
 	    // title and content
 	    XSLFSlideLayout titleBodyLayout = defaultMaster.getLayout(SlideLayout.TITLE_AND_CONTENT);
-	    XSLFSlide slide2 = slideShow.createSlide(titleBodyLayout);
+	    XSLFSlide slide2 = ppt.createSlide(titleBodyLayout);
 
 	    XSLFTextShape title2 = slide2.getPlaceholder(0);
 	    title2.setText("Second Title");
@@ -47,10 +47,12 @@ public class CreateNewPresentation {
 	    body2.addNewTextParagraph().addNewTextRun().setText("First paragraph");
 	    body2.addNewTextParagraph().addNewTextRun().setText("Second paragraph");
 	    body2.addNewTextParagraph().addNewTextRun().setText("Third paragraph");
+	    
+	    // write to a file
 		FileOutputStream out;
 		try {
 			out = new FileOutputStream("slideshow.ppt");
-			slideShow.write(out);
+			ppt.write(out);
 			out.close();
 		} catch (FileNotFoundException e) {
 			// TODO Auto-generated catch block
